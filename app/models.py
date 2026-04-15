@@ -9,7 +9,7 @@ class Transactions(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("Users.id"), nullable=False, index=True)
-    datetime = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     amount = Column(Float, nullable=False)
     description = Column(String, nullable=True)
     item_name = Column(String, nullable=True)
