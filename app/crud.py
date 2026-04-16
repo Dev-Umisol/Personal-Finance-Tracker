@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from pwdlib import PasswordHash
 from app import models
@@ -34,4 +35,12 @@ def get_all_transactions(db: Session, user_id: int) -> models.Transactions | lis
 
 # Retrieve item id from the database and delete
 def delete_transactions(db: Session, id: int):
-    pass
+    del_transaction = db.query(models.Transactions).filter(models.Transactions.id == id).first()
+    
+    if del_transaction is None:
+        raise HTTPException(status_code=404, detail="id not found")
+    
+    db.delete(del_transaction)
+    db.commit()
+    
+    return del_transaction
