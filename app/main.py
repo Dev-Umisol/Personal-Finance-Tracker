@@ -60,3 +60,17 @@ def get_current_user(
         raise HTTPException(status_code=401, detail="Invalid user")
 
     return fetch_user
+
+# Register a new user with username and password
+@app.post('/users/register', response_model=schemas.UserResponse, status_code=201)
+def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    if crud.get_user_by_username(db, user.user_name):
+        raise HTTPException(status_code=409, detail="Username already exists")
+    else:
+        new_user = crud.create_user(db, user.user_name, user.user_password)
+        
+    return new_user
+
+@app.post('/users/login', response_model=schemas.UserCreate, status_code=201)
+def user_login(user: schemas.UserCreate, password: schemas.UserCreate, db: Session = Depends(get_db)):
+    pass
