@@ -58,7 +58,6 @@ def get_current_user(
     
     if fetch_user is None:
         raise HTTPException(status_code=401, detail="Invalid user")
-
     return fetch_user
 
 # Register a new user with username and password
