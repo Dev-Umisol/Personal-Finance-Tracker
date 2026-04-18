@@ -35,5 +35,28 @@ def create_access_token(user_name):
         "exp": datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     }
 
-    return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+    return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
+# Dependency function to authenticate and retrieve the current user from JWT token
+def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db)
+):
+    try:
+        decoded_token = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Expired Token")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    user_name = decoded_token.get("sub")
+    
+    if user_name is None:
+        raise HTTPException(status_code=401, detail="Invalid token: missing sub claim")
+    
+    fetch_user = crud.get_user_by_username(db, user_name)
+    
+    if fetch_user is None:
+        raise HTTPException(status_code=401, detail="Invalid user")
+
+    return fetch_user
