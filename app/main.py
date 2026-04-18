@@ -71,6 +71,6 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         
     return new_user
 
-@app.post('/users/login', response_model=schemas.UserCreate, status_code=201)
-def user_login(user: schemas.UserCreate, password: schemas.UserCreate, db: Session = Depends(get_db)):
+@app.post('/users/login')
+def user_login(user: schemas.UserCreate, db: Session = Depends(get_db)):
     pass
