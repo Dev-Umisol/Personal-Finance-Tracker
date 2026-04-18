@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
+from pwdlib import PasswordHash
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone, timedelta
 from app import crud, schemas, models
@@ -70,6 +71,21 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         
     return new_user
 
+# Endpoint for user login: authenticates user credentials and returns an access token
 @app.post('/users/login')
 def user_login(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    pass
+    password_hash = PasswordHash.recommended()
+    password = crud.get_user_by_username(db, user.user_name)
+    
+    if password is None:
+        raise HTTPException(status_code=401, detail="Username not found")
+    
+    is_valid = password_hash.verify(user.user_password, password.user_password) # type: ignore
+    
+    if not is_valid:
+        raise HTTPException(status_code=401, detail="Password is not valid")
+    
+    return {
+        "access_token": create_access_token(user.user_name),
+        "token_type": "bearer"
+    }
