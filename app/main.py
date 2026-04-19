@@ -90,14 +90,26 @@ def user_login(user: schemas.UserCreate, db: Session = Depends(get_db)):
         "token_type": "bearer"
     }
 
-@app.post('/transactions')
+# Create a new transaction
+@app.post('/transactions', response_model=schemas.TransactionResponse)
 def create_transactions(transaction: schemas.TransactionCreate, db: Session = Depends(get_db), user: models.Users = Depends(get_current_user)):
-    pass
+    add_transaction = crud.create_transactions(db, user.id, transaction.item_name, transaction.item_description, transaction.amount) # type: ignore
+    
+    return add_transaction
 
-@app.get('/transactions')
+# Get all transactions for the user
+@app.get('/transactions', response_model=list[schemas.TransactionResponse])
 def get_transaction(db: Session = Depends(get_db), user: models.Users = Depends(get_current_user)):
-    pass
+    find_transaction = crud.get_all_transactions(db, user.id) # type: ignore
+    
+    if find_transaction is None:
+        raise HTTPException(status_code=404 , detail="Item not found")
+    
+    return find_transaction
 
-@app.delete('/transactions/{id}')
+# Delete a transaction by ID
+@app.delete('/transactions/{id}', response_model=schemas.TransactionResponse)
 def delete_transaction(id: int, db: Session = Depends(get_db), user: models.Users = Depends(get_current_user)):
-    pass
+    del_transaction = crud.delete_transactions(db, id)
+    
+    return del_transaction
