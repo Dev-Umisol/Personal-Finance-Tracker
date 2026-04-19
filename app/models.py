@@ -11,7 +11,7 @@ class Transactions(Base):
     user_id = Column(Integer, ForeignKey("Users.id"), nullable=False, index=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     amount = Column(Float, nullable=False)
-    description = Column(String, nullable=True)
+    item_description = Column(String, nullable=True)
     item_name = Column(String, nullable=True)
     
     # Establish a relationship between Transactions and Users
