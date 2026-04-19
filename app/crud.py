@@ -33,6 +33,10 @@ def create_transactions(db: Session, user_id: int, item_name: str, item_descript
 def get_all_transactions(db: Session, user_id: int) -> models.Transactions | list:
     return db.query(models.Transactions).filter(models.Transactions.user_id == user_id).all()
 
+# Retrieve a single transaction by its id, will be used to compare in main so that another user can't delete another users item
+def get_single_transaction(db: Session, id: int) -> models.Transactions | None:
+    return db.query(models.Transactions).filter(models.Transactions.id == id).first()
+
 # Retrieve item id from the database and delete
 def delete_transactions(db: Session, id: int):
     del_transaction = db.query(models.Transactions).filter(models.Transactions.id == id).first()

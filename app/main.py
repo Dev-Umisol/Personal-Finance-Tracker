@@ -110,6 +110,14 @@ def get_transaction(db: Session = Depends(get_db), user: models.Users = Depends(
 # Delete a transaction by ID
 @app.delete('/transactions/{id}', response_model=schemas.TransactionResponse)
 def delete_transaction(id: int, db: Session = Depends(get_db), user: models.Users = Depends(get_current_user)):
+    owner_transaction = crud.get_single_transaction(db, id)
+    
+    if owner_transaction is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    
+    if owner_transaction.user_id != user.id: # type: ignore
+        raise HTTPException(status_code=403, detail="Unauthorized User")
+    
     del_transaction = crud.delete_transactions(db, id)
     
     return del_transaction
