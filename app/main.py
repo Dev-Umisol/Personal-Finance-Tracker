@@ -89,3 +89,15 @@ def user_login(user: schemas.UserCreate, db: Session = Depends(get_db)):
         "access_token": create_access_token(user.user_name),
         "token_type": "bearer"
     }
+
+@app.post('/transactions')
+def create_transactions(transaction: schemas.TransactionCreate, db: Session = Depends(get_db), user: models.Users = Depends(get_current_user)):
+    pass
+
+@app.get('/transactions')
+def get_transaction(db: Session = Depends(get_db), user: models.Users = Depends(get_current_user)):
+    pass
+
+@app.delete('/transactions/{id}')
+def delete_transaction(id: int, db: Session = Depends(get_db), user: models.Users = Depends(get_current_user)):
+    pass
