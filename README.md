@@ -1,6 +1,6 @@
 # Personal Finance Tracker API
 
-> A secured REST API built with FastAPI that allows users to register, authenticate via JWT, and manage personal financial transactions — with full ownership enforcement and persistent SQLite storage.
+> A secured REST API built with FastAPI that allows users to register, authenticate via JWT, and manage personal financial transactions, with full ownership enforcement and persistent SQLite storage.
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-REST%20API-009688?logo=fastapi&logoColor=white)
@@ -68,7 +68,7 @@ app/
 ├── models.py        # SQLAlchemy ORM models (Users, Transactions)
 ├── schemas.py       # Pydantic request/response schemas
 ├── database.py      # Engine, session, and Base configuration
-└── .env             # SECRET_KEY and DATABASE_URL (not committed)
+└── .env             
 ```
 
 - **`main.py`** handles routing and authentication middleware
