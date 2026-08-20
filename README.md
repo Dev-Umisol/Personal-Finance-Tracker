@@ -218,7 +218,7 @@ pytest Tests/
 <!-- CONTACT -->
 ## Contact
 
-Destin Nguyen - [Portfolio](https://devdestinportfolio.vercel.app) - [GitHub](https://github.com/Dev-Umisol)
+Destin Nguyen | [Portfolio](https://devdestinportfolio.vercel.app) | [GitHub](https://github.com/Dev-Umisol)
 
 Project Link: [https://github.com/Dev-Umisol/Personal-Finance-Tracker](https://github.com/Dev-Umisol/Personal-Finance-Tracker)
 
