@@ -215,13 +215,6 @@ pytest Tests/
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- LICENSE -->
-## License
-
-<!-- *** No LICENSE.txt is committed yet - add one (MIT is a common default for portfolio projects) and update this section once you have. -->
-
-Not yet licensed.
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
